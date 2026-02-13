@@ -1,0 +1,30 @@
+<%- include("partials/header.ejs") %>
+
+<div class="book_review">
+    <% if (locals.entry){%>
+        <h2><%= entry.title %></h2>
+        <p><%= entry.author_name %></p>
+        <p><%= entry.first_publish_year %></p>
+        <img src="https://covers.openlibrary.org/b/id/<%= entry.cover_id %>-M.jpg" />
+    <h2>Edit Information about the book</h2>
+    <form class="form_review" action="/edit" method="post">
+        <input type="date" id="read_date" name="read_date" autocomplete="off" value="<%= entry.read_date.toISOString().split('T')[0]%>">
+        <label for="review">Your impression:</label>
+        <input type="text" id="review" name="review" autofocus autocomplete="off" required value="<%= entry.review %>"/>
+        <div class="rating">
+            <% for (let i = 10; i >= 1; i--) { %>
+                <input type="radio" id="star<%= i %>" name="rating" value="<%= i %>" <%= entry.rating == i ? 'checked' : '' %>>
+                <label for="star<%= i %>" title="<%= i %> stars">★</label>
+            <% } %>
+        </div>
+        <input hidden name="id" value="<%=entry.id %>">
+        <button type="submit">Confirm the edit</button>
+    </form>
+    <form class="delete_review" action="/delete" method="post">
+        <input hidden name="id" value="<%=entry.id %>">
+        <button type="submit">Delete from read</button>
+    </form>
+    <% } %>
+</div>
+
+<%- include("partials/footer.ejs") %>

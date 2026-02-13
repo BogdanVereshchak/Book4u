@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicon/site.webmanifest">
+    <link rel="stylesheet" href="style.css">
+    <title>Book4U</title>
+</head>
+<body>
+    <header>
+        <div class="main">
+            <a href="/">Main Page</a>
+        </div>
+        <div class="search">
+            <form action="/search" method="get" class="searchForm" role="search">
+                <input type="text" name="bookName" placeholder="<%= locals.error ? error : 'Enter book name'%>" required autocomplete="off">
+                <input type="submit" value="" class="search-bar-submit" aria-label="Search submit">
+            </form>
+        </div>
+        <div class="pages">
+            <a>Books</a>
+        </div>
+        <div class="auth">
+            <% if (locals.user) {%>
+                <p>Welcome back <%= user.name %></p>
+                <form class="logout" action="/logout" method="get">
+                    <button type="submit">LogOut</button>
+                </form>
+            <% } else {%>
+                    <form action="/login" method="get" class="authForm loginForm">
+                        <button type="submit">Login</button>
+                    </form>
+                    <form action="/register" method="get" class="authForm registerForm">
+                        <button type="submit">Register</button>
+                    </form>
+                <% } %>
+        </div>
+        
+    </header>
+    <main>

@@ -1,0 +1,11 @@
+<%- include("partials/header.ejs") %>
+<div class="register">
+    <h1>Register to your account</h1>
+    <form action="/register" method="post">
+        <input type="text" name="name" placeholder="Enter your username" autocomplete="off">
+        <input type="password" name="password" placeholder="<%= locals.authError ? authError :  'Enter your password'%>" autocomplete="off">
+        <button type="submit">Register</button>
+        <p><%= locals.error ? error : ""%></p>
+    </form>
+</div>  
+<%- include("partials/footer.ejs") %>
