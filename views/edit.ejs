@@ -1,16 +1,17 @@
 <%- include("partials/header.ejs") %>
 
 <div class="book_review">
+    <div class="book_data">
     <% if (locals.entry){%>
-        <h2><%= entry.title %></h2>
-        <p><%= entry.author_name %></p>
-        <p><%= entry.first_publish_year %></p>
-        <img src="https://covers.openlibrary.org/b/id/<%= entry.cover_id %>-M.jpg" />
+        <h1><%= entry.title %></h1>
+        <img class="cover_img" src="https://covers.openlibrary.org/b/id/<%= entry.cover_id %>-M.jpg" />
+        <p><%= entry.author_name %>, <%= entry.first_publish_year %></p>
+    </div>
     <h2>Edit Information about the book</h2>
     <form class="form_review" action="/edit" method="post">
         <input type="date" id="read_date" name="read_date" autocomplete="off" value="<%= entry.read_date.toISOString().split('T')[0]%>">
         <label for="review">Your impression:</label>
-        <input type="text" id="review" name="review" autofocus autocomplete="off" required value="<%= entry.review %>"/>
+        <textarea type="text" id="review" name="review" autofocus autocomplete="off" required><%= entry.review %></textarea>
         <div class="rating">
             <% for (let i = 10; i >= 1; i--) { %>
                 <input type="radio" id="star<%= i %>" name="rating" value="<%= i %>" <%= entry.rating == i ? 'checked' : '' %>>
@@ -18,11 +19,14 @@
             <% } %>
         </div>
         <input hidden name="id" value="<%=entry.id %>">
-        <button type="submit">Confirm the edit</button>
+        <div class="button_container">
+            <button type="submit">Confirm the edit</button>
+            <button type="submit" form="delete_review">Delete from read</button>
+        </div>
+
     </form>
     <form class="delete_review" action="/delete" method="post">
         <input hidden name="id" value="<%=entry.id %>">
-        <button type="submit">Delete from read</button>
     </form>
     <% } %>
 </div>

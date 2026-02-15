@@ -1,12 +1,13 @@
 <%- include("partials/header.ejs") %>
 
 <div class="book_review">
-    <% if (locals.book){%>
-        <h2><%= book.title %></h2>
-        <p><%= book.author_name %></p>
-        <p><%= book.first_publish_year %></p>
-        <img src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" />
-    <% } %>
+    <div class="book_data">
+        <% if (locals.book){%>
+            <h1><%= book.title %></h1>
+            <img class="cover_img" src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" />
+            <p><%= book.author_name %>, <%= book.first_publish_year %></p>
+        <% } %>
+    </div>
     <h2>Add Information about the book</h2>
     <form class="form_review" action="/new" method="post">
         <% if (locals.book){%>
@@ -17,7 +18,7 @@
         <% } %>
         <input type="date" id="read_date" name="read_date" autocomplete="off">
         <label for="review">Your impression:</label>
-        <input type="text" id="review" name="review" autofocus autocomplete="off" required placeholder="Write your review of the book"/>
+        <textarea type="text" id="review" name="review" autofocus autocomplete="off" required placeholder="Write your review of the book"></textarea>
         <div class="rating">
             <% for (let i = 10; i >= 1; i--) { %>
                 <input type="radio" id="star<%= i %>" name="rating" value="<%= i %>">

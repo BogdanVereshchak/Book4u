@@ -9,10 +9,8 @@ import rateLimit from "express-rate-limit";
 const port = process.env.PORT || 3000;
 const app = express();
 
-// Trust Cloudflare Tunnel proxy to fix express-rate-limit validation error
 app.set('trust proxy', 1);
 
-// Security Middleware
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
@@ -22,17 +20,19 @@ app.use(helmet({
   },
 }));
 
-const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-app.use(limiter);
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(cookieParser());
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	limit: 100, 
+	standardHeaders: true, 
+	legacyHeaders: false, 
+});
+app.use(limiter);
+
+
 
 const loadUserBooks = async (req, res, next)=>{
     if (req.user) {
@@ -73,7 +73,6 @@ const db = new pg.Pool({
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT
 });
-// db.connect() is handled automatically by the pool
 
 class Book {
     constructor(title, author_name, first_publish_year, cover_id) {
@@ -209,6 +208,7 @@ app.post("/new", async (req,res)=>{
 
 app.get("/edit", async (req,res)=>{
     const id = req.query.id;
+    // console.log(req.userBooks.find(x => x.id == id));
     return res.render("edit.ejs", { user: req.user, entry: req.userBooks.find(x => x.id == id) });
 
 });

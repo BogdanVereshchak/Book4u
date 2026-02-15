@@ -7,38 +7,43 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
     <link rel="manifest" href="/images/favicon/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Book4U</title>
 </head>
 <body>
     <header>
-        <div class="main">
-            <a href="/">Main Page</a>
-        </div>
-        <div class="search">
-            <form action="/search" method="get" class="searchForm" role="search">
-                <input type="text" name="bookName" placeholder="<%= locals.error ? error : 'Enter book name'%>" required autocomplete="off">
-                <input type="submit" value="" class="search-bar-submit" aria-label="Search submit">
-            </form>
-        </div>
-        <div class="pages">
-            <a>Books</a>
-        </div>
-        <div class="auth">
-            <% if (locals.user) {%>
-                <p>Welcome back <%= user.name %></p>
-                <form class="logout" action="/logout" method="get">
-                    <button type="submit">LogOut</button>
+        <div class="header_container">
+            <div class="main">
+                <a href="/">Main Page</a>
+            </div>
+            <div class="search">
+                <form action="/search" method="get" class="searchForm" role="search">
+                    <input type="search" name="bookName" placeholder="<%= locals.error ? error : 'Enter book name'%>" required autocomplete="off">
+                    <input type="submit" value="" class="search-bar-submit" aria-label="Search submit">
                 </form>
-            <% } else {%>
-                    <form action="/login" method="get" class="authForm loginForm">
-                        <button type="submit">Login</button>
+            </div>
+            <!-- <div class="pages">
+                <a>Books</a>
+            </div> -->
+            <div class="auth">
+                <% if (locals.user) {%>
+                    <p>Welcome back <%= user.name %></p>
+                    <form class="logout" action="/logout" method="get">
+                        <button type="submit">LogOut</button>
                     </form>
-                    <form action="/register" method="get" class="authForm registerForm">
-                        <button type="submit">Register</button>
-                    </form>
-                <% } %>
+                <% } else {%>
+                        <form action="/login" method="get" class="authForm loginForm">
+                            <button type="submit">Login</button>
+                        </form>
+                        <form action="/register" method="get" class="authForm registerForm">
+                            <button type="submit">Register</button>
+                        </form>
+                    <% } %>
+            </div>
         </div>
-        
     </header>
     <main>

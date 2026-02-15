@@ -1,39 +1,45 @@
 <%- include("partials/header.ejs") %>
 
 <div class="intro">
+    <br>
     <h1>Welcome to the Book4U</h1>
+    <br>
     <h2>Here you can add, review and rate books that you've ever read</h2>
+    <br>
 </div>
-<div class="Books">
+<div class="books">
     <% if (locals.books) {%>
         <% for (let book of books) {%>
-            <h1><%= book.title %></h1>
-            <% if (book.cover_id) { %>
-                <img src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" alt="Cover of <%= book.title %>" />
-            <% } else { %>
-                <div class="no-cover">There is no cover image for this book</div>
-            <% } %>
-            <p><%= book.author_name %></p>
-            <p><%= book.first_publish_year %></p>
-            <div class="review">
-                <h2>Your Review:</h2>
-                <% if (book.review) { %>
-                    <p><%= book.review %></p>
-                <% } else { %>
-                    <p><em>You haven't provided a review.</em></p>
-                <% } %>
-                <p><strong>Rating:</strong> 
-                    <%= book.rating ? book.rating + '/10' : 'No rating' %>
-                </p>
-                <p><strong>Date of read:</strong> 
-                    <%= book.read_date ? new Date(book.read_date).toDateString() : 'There is no read date' %>
-                </p>
+            <div class="book_entry">
+                <div class="book_data">
+                    <h1><%= book.title %></h1>
+                    <% if (book.cover_id) { %>
+                        <img class="cover_img" src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" alt="Cover of <%= book.title %>" />
+                    <% } else { %>
+                        <div class="no-cover">There is no cover image for this book</div>
+                    <% } %>
+                    <p><%= book.author_name %>, <%= book.first_publish_year %></p>
+                </div>
+                <div class="book_review">
+                    <h2>Your Review:</h2>
+                    <% if (book.review) { %>
+                        <p><%= book.review %></p>
+                    <% } else { %>
+                        <p><em>You haven't provided a review.</em></p>
+                    <% } %>
+                    <p><strong>Rating:</strong> 
+                        <%= book.rating ? book.rating + '/10' : 'No rating' %>
+                    </p>
+                    <p><strong>Date of read:</strong> 
+                        <%= book.read_date ? new Date(book.read_date).toDateString() : 'There is no read date' %>
+                    </p>
+                    <form class="edit_entry" action="/edit" method="get">
+                        <input hidden name="id" value="<%= book.id %>">
+                        <input hidden name="book_id" value="<%= book.id %>">
+                        <button type="submit">Edit Review</button>
+                    </form>
+                </div>
             </div>
-            <form class="edit_entry" action="/edit" method="get">
-                <input hidden name="id" value="<%= book.id %>">
-                <input hidden name="book_id" value="<%= book.id %>">
-                <button type="submit">Edit Review</button>
-            </form>
         <% } %>
     <% } %>
 </div>

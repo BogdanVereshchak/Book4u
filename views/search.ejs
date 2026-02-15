@@ -1,20 +1,21 @@
 <%- include("partials/header.ejs") %>
 
 <div class="search_results">
+    <br>
     <h1>Search results</h1>
+    <br>
 </div>
-<div class="Books">
+<div class="books">
     <% if (locals.result) { %>
         <% for (let res of result) { %>
-            <div class="book-card">
+            <div class="book_card">
                 <h1><%= res.title %></h1>
                 <% if (res.cover_i) { %>
-                    <img src="https://covers.openlibrary.org/b/id/<%= res.cover_i %>-M.jpg" />
+                    <img class="cover_img" src="https://covers.openlibrary.org/b/id/<%= res.cover_i %>-M.jpg"/>
                 <% } else { %>
                     <div class="no-image">No Image</div>
                 <% } %>
-                <p><%= res.author_name ? res.author_name : "Unknown Author" %></p>
-                <p><%= res.first_publish_year %></p>
+                <p><%= res.author_name ? res.author_name : "Unknown Author" %>, <%= res.first_publish_year %></p>
                 <form action="/new" method="get" class="resultForm">
                     <input type="hidden" name="title" value="<%= res.title %>">
                     <input type="hidden" name="author_name" value="<%= res.author_name %>">
