@@ -1,7 +1,6 @@
 <%- include("partials/header.ejs") %>
 
 <div class="search_results">
-    <br>
     <h1>Search results</h1>
     <br>
 </div>
@@ -9,7 +8,7 @@
     <% if (locals.result) { %>
         <% for (let res of result) { %>
             <div class="book_card">
-                <h1><%= res.title %></h1>
+                <h2><%= res.title %></h2>
                 <% if (res.cover_i) { %>
                     <img class="cover_img" src="https://covers.openlibrary.org/b/id/<%= res.cover_i %>-M.jpg"/>
                 <% } else { %>

@@ -6,6 +6,10 @@
   --text-padding: 15px;
   --main-font: "SN Pro", sans-serif;
   --buttons-font: "Poppins", sans-serif;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --shadow-soft: 0 4px 6px -1x rgba(0,0,0,0.1);
 }
 
 html{
@@ -26,6 +30,14 @@ button{
 button:hover{
     color: var(--secondary-accent);
     cursor:pointer;
+}
+button:focus{
+    color: var(--secondary-accent);
+    outline: 2px solid var(--primary-accent);
+}
+button:active {
+  background-color: var(--primary-accent);
+  color: var(--main-bg-color);
 }
 
 .cover_img{
@@ -86,32 +98,37 @@ main {
     align-items: center;    
 }
 
-.book_entry{
+.book_entry, .book_card{
     display: flex;
-    justify-content: space-between;
-    align-content: space-between;
-    border: 2px dashed var(--primary-accent);
+    border: 2px solid var(--primary-accent);
+    box-shadow: 5px 5px 8px -3px var(--primary-accent), 8px 8px 10px -5px var(--secondary-accent);
     border-radius: 10px;
     padding: 10px;
+}
+
+.book_entry:hover, .book_card:hover{
+    box-shadow: 5px 5px 8px var(--primary-accent), 8px 8px 10px var(--secondary-accent);
+}
+
+.book_entry{
+    justify-content: space-between;
+    align-content: space-between;
     gap: 20px;
 }
 
 .book_card{
-    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border: 2px dashed var(--primary-accent);
-    border-radius: 10px;
-    padding: 10px;
     gap: 5px;
 }
 
 .books{
-    display: flex;
-    flex-flow: column;
-    gap: 30px;
-    max-width: 600px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-md);
+    width: 100%;
+    max-width: 1200px;
 }
 
 input, textarea{
@@ -123,11 +140,31 @@ input, textarea{
 }
 
 textarea{
+    padding: 5px;
     min-width: fit-content;
-    min-width: 20rem;
+    width: 100%;
     min-height: fit-content;
     max-width: 500px;
     object-fit: contain ;
+    transition: border-color 0.3s ease;
+}
+textarea:focus {
+  border: 2px var(--primary-accent);
+  box-shadow: 0 0 3px var(--primary-accent);
+}
+textarea::-webkit-scrollbar {
+  width: 7px;
+}
+textarea::-webkit-scrollbar-track {
+  background: var(--main-bg-color);
+  border-radius: 3px;
+}
+textarea::-webkit-scrollbar-thumb {
+  background: var(--primary-accent);
+  border-radius: 3px;
+}
+textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-accent);
 }
 
 input[type="text"]:focus, input[type="search"]:focus{
@@ -152,6 +189,11 @@ a{
 
 a:hover{
     color:var(--primary-accent);
+}
+a:focus{
+    outline: 2px solid var(--primary-accent);
+    border-radius: 5px;
+    box-shadow: 0 0 5px 3px var(--primary-accent);
 }
 
 .auth{

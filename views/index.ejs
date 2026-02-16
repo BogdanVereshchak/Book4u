@@ -1,7 +1,6 @@
 <%- include("partials/header.ejs") %>
 
 <div class="intro">
-    <br>
     <h1>Welcome to the Book4U</h1>
     <br>
     <h2>Here you can add, review and rate books that you've ever read</h2>
@@ -12,7 +11,7 @@
         <% for (let book of books) {%>
             <div class="book_entry">
                 <div class="book_data">
-                    <h1><%= book.title %></h1>
+                    <h2><%= book.title %></h2>
                     <% if (book.cover_id) { %>
                         <img class="cover_img" src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" alt="Cover of <%= book.title %>" />
                     <% } else { %>

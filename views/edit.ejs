@@ -3,7 +3,7 @@
 <div class="book_review">
     <div class="book_data">
     <% if (locals.entry){%>
-        <h1><%= entry.title %></h1>
+        <h2><%= entry.title %></h2>
         <img class="cover_img" src="https://covers.openlibrary.org/b/id/<%= entry.cover_id %>-M.jpg" />
         <p><%= entry.author_name %>, <%= entry.first_publish_year %></p>
     </div>
