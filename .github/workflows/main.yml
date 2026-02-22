@@ -1,0 +1,32 @@
+name: Book4u GitHub Actions Pipeline
+
+# Коли запускати пайплайн:
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # На якій системі запускати (GitHub дасть нам безкоштовний сервер на Ubuntu)
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Завантажуємо твій код (оновлено до версії v4)
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. Встановлюємо Node.js, бо без нього npm не працюватиме
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # 3. Встановлюємо залежності (еквівалент твого Install Dependencies)
+    - name: Install Dependencies
+      run: npm ci
+
+    # 4. Перевіряємо синтаксис (еквівалент твого Lint & Check)
+    - name: Build and Check code
+      run: node --check index.js
