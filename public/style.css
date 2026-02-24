@@ -9,7 +9,7 @@
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 1.5rem;
-  --shadow-soft: 0 4px 6px -1x rgba(0,0,0,0.1);
+  --shadow-soft: 0 4px 6px -1px rgba(0,0,0,0.1);
 }
 
 html{
