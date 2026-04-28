@@ -234,8 +234,14 @@ app.post("/edit", async (req,res)=>{
 
 app.post("/delete", async (req,res)=>{
     const del_id = req.body.id;
-    new UserBooks({id:del_id}).del();
-    res.redirect("/");
+    try {
+        const entry = new UserBooks({ id: del_id });
+        await entry.del();
+        res.redirect("/");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Помилка при видаленні");
+    }
 });
 
 app.listen(port, () => {
