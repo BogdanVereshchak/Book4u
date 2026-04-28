@@ -240,13 +240,17 @@ app.post("/delete", async (req,res)=>{
         res.redirect("/");
     } catch (err) {
         console.error(err);
-        res.status(500).send("Помилка при видаленні");
+        res.status(500).send("Error when deleting");
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`Server listening on port ${port}`);
+    });
+}
+
+export { app, db };
 
 async function registerUser(name, password) {
     try {
@@ -279,7 +283,7 @@ async function searchBooks(searchTerm) {
         const result = await axios.get(`https://openlibrary.org/search.json?title=${searchTerm}&limit=10`);
         return result.data.docs;
     } catch (err) {
-        console.log("Error why fetching books from search term");
+        console.error("Error fetching books from search term");
         return null;
     }
 }
