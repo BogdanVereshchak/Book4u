@@ -36,6 +36,7 @@ app.use(limiter);
 
 const loadUserBooks = async (req, res, next)=>{
     if (req.user) {
+	try {
         const books = await db.query(`
             SELECT r.id, r.book_id, b.title, b.author_name, b.first_publish_year, b.cover_id, r.review, r.rating, r.read_date
             FROM user_books as r join books as b on r.book_id = b.id
@@ -43,6 +44,10 @@ const loadUserBooks = async (req, res, next)=>{
             where u.id = $1
             order by r.rating desc, b.title asc;`, [req.user.id]);
         req.userBooks = books.rows;
+    } catch(error){
+	console.error("Database error in loadUserBooks: ", error);
+	req.userBooks = [];
+    	}
     }
     next();
 };
@@ -152,7 +157,7 @@ app.post("/register", async (req, res) => {
     const { name, password } = req.body;
     const newUser = await registerUser(name, password);
     if (!newUser)
-        res.render("register.ejs", { authError: "Can't register. Try different username" });
+        return res.render("register.ejs", { authError: "Can't register. Try different username" });
     const accessToken = jwt.sign({id: newUser.id, name: newUser.name}, process.env.SECRET_KEY, {expiresIn: '24h'});
     res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 86400000});
     res.redirect("/");
@@ -235,11 +240,10 @@ app.post("/edit", async (req,res)=>{
 app.post("/delete", async (req,res)=>{
     const del_id = req.body.id;
     try {
-        const entry = new UserBooks({ id: del_id });
-        await entry.del();
-        res.redirect("/");
+        await new UserBooks({id:del_id}).del();
+	res.redirect("/");
     } catch (err) {
-        console.error(err);
+        console.error("Error deleting book:",err);
         res.status(500).send("Error when deleting");
     }
 });
